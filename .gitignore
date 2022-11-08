@@ -129,3 +129,6 @@ dmypy.json
 
 # Canvas
 canvas.py
+
+# Shit Apple
+.DS_Store/
