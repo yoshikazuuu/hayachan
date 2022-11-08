@@ -1,0 +1,1 @@
+Discord bot that related to https://socs1.binus.ac.id/quiz. For learning and exploration purposes.
