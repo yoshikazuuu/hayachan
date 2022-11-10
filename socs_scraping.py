@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 import string
 import requests
 import os
@@ -28,7 +28,7 @@ def getFiles():
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     # driver = webdriver.Chrome(options=chrome_options)
-    driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
     driver.get("https://socs1.binus.ac.id/quiz/public/login.php")
 
@@ -73,7 +73,8 @@ def getFiles():
 
 
 if __name__ == "__main__":
-    load_dotenv()
+    load_dotenv(find_dotenv())
+
 
     username = os.getenv("EMAIL_BINUS")
     password = os.getenv("PASS_BINUS")
