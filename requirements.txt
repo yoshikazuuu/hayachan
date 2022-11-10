@@ -3,3 +3,4 @@ chromedriver-py
 python-dotenv
 discord.py
 webdriver-manager
+packaging
