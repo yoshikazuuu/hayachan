@@ -9,10 +9,10 @@ import os
 
 def getFiles():
     chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    # chrome_options.add_experimental_option("detach", True)
-
-    driver = webdriver.Chrome(options=chrome_options)
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome('/home/<user>/chromedriver',chrome_options=chrome_options)
 
     driver.get("https://socs1.binus.ac.id/quiz/public/login.php")
 
