@@ -8,19 +8,29 @@ import requests
 import os
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+from pyvirtualdisplay import Display
+from selenium import webdriver
 
 def getFiles():
 
+
+    display = Display(visible=0, size=(800, 600))
+    display.start()
+
+    options = webdriver.ChromeOptions()
+    options.add_argument('--no-sandbox')
+
+    driver = webdriver.Chrome(chrome_options=options)
     # service=Service(ChromeDriverManager().install())
 
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
+    # chrome_options = Options()
+    # chrome_options.add_argument('--headless')
+    # chrome_options.add_argument('--no-sandbox')
     # chrome_options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(options=chrome_options)
+    # driver = webdriver.Chrome(options=chrome_options)
     # driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
 
-    driver.get("https://socs1.binus.ac.id/quiz/public/login.php")
+    # driver.get("https://socs1.binus.ac.id/quiz/public/login.php")
 
     driver.find_element(By.ID, "login").send_keys(username)
     driver.find_element(By.ID, "passwd").send_keys(password)
