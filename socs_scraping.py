@@ -79,6 +79,7 @@ if __name__ == "__main__":
     username = os.getenv("EMAIL_BINUS")
     password = os.getenv("PASS_BINUS")
 
+    print("ini harus muncul")
     print(username)
 
     getFiles()
