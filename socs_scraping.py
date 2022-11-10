@@ -6,13 +6,16 @@ from dotenv import load_dotenv
 import string
 import requests
 import os
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 def getFiles():
     chrome_options = Options()
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome('/home/<user>/chromedriver',chrome_options=chrome_options)
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+
 
     driver.get("https://socs1.binus.ac.id/quiz/public/login.php")
 
