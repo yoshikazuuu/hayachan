@@ -68,8 +68,45 @@ class Get(commands.Cog, name="Download"):
 
             print('All files zipped successfully!') 
 
-        async def download():
-            if os.path.exists('./problems/problems-all.zip'):
+        if lab == 'ALL':
+            temp = lab.upper
+            temp.upper()
+        elif lab and week:
+            temp = lab + '-' +str(week)    
+            temp.upper()
+        elif lab:
+            temp = lab
+            temp.upper()
+
+        if lab == 'ALL':
+            print("all")
+            if os.path.exists('./problems/problems-' + temp  +'.zip'):
+                print("File exist!")
+                await ctx.send("Uploading...")
+                await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
+            else:
+                bulking()  
+                await ctx.send("Uploading...")
+                await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
+        elif lab and week and problem:
+            problem = problem.upper()
+            lab = lab.upper()
+            file_path = glob.glob("./problems/*/" + lab + '-week-' + week + '-prob-' + problem + '.pdf')
+            
+            await ctx.send(file=discord.File(file_path[0]))
+        elif lab and week:
+            print("lab and week")
+            if os.path.exists('./problems/problems-' + temp  +'.zip'):
+                print("File exist!")
+                await ctx.send("Uploading...")
+                await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
+            else:
+                bulking()  
+                await ctx.send("Uploading...")
+                await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
+        elif lab:
+            print("lab")
+            if os.path.exists('./problems/problems-' + temp  +'.zip'):
                 print("File exist!")
                 await ctx.send("Uploading...")
                 await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
@@ -78,28 +115,6 @@ class Get(commands.Cog, name="Download"):
                 await ctx.send("Uploading...")
                 await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
 
-        if lab == 'all':
-            temp = lab 
-        elif lab and week:
-            temp = lab + '-' +str(week)    
-        elif lab:
-            temp = lab
-
-        if lab == 'all':
-            print("all")
-            download()
-        elif lab and week:
-            print("lab and week")
-            download()
-        elif lab:
-            print("lab")
-            download()
-        else:
-            problem = problem.upper()
-            lab = lab.upper()
-            file_path = glob.glob("./problems/*/" + lab + '-week-' + week + '-prob-' + problem + '.pdf')
-            
-            await ctx.send(file=discord.File(file_path[0]))
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Get(bot))

@@ -10,7 +10,7 @@ import os
 def getFiles():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
-    chrome_options.add_experimental_option("detach", True)
+    # chrome_options.add_experimental_option("detach", True)
 
     driver = webdriver.Chrome(options=chrome_options)
 
@@ -26,6 +26,7 @@ def getFiles():
     Weeks = len(Select(driver.find_element(By.ID, "cid")).options)
 
     for week in range(1, Weeks + 1):
+        driver.find_element(By.XPATH, '//*[@id="cid"]/option[' + str(week) + ']').click()
         curr_path = driver.find_element(By.XPATH, '//*[@id="cid"]/option[' + str(week) + ']').text
         os.makedirs(curr_path, exist_ok=True)
         os.chdir("./" + curr_path)
