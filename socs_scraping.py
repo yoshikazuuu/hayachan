@@ -23,12 +23,14 @@ def getFiles():
     # driver = webdriver.Chrome(chrome_options=options)
     # service=Service(ChromeDriverManager().install())
 
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    # driver = webdriver.Chrome(options=chrome_options)
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+    from selenium import webdriver
+    from selenium import webdriver
+    from selenium.webdriver.chrome.service import Service as BraveService
+    from webdriver_manager.chrome import ChromeDriverManager
+    from webdriver_manager.core.utils import ChromeType
+
+    driver = webdriver.Chrome(service=BraveService(ChromeDriverManager(path = r".\\Drivers", chrome_type=ChromeType.BRAVE).install()))
+
 
     driver.get("https://socs1.binus.ac.id/quiz/public/login.php")
 
