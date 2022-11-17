@@ -7,6 +7,7 @@ import os
 class Get(commands.Cog, name="Download"):
     """For Downloading listed files"""
 
+
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
@@ -17,10 +18,14 @@ class Get(commands.Cog, name="Download"):
 
         Example: 
         `haya get BG75 3 A`
-        `haya get BG75 5` on progress(not yet available)
-        `haya get BG75` on progress(not yet available)
+        `haya get BG75 5`
+        `haya get BG75`
         `haya get all`
         """
+
+        # Counting if file exist or not
+        counter = False;
+
         def get_all_file_paths(directory):
         
             # initializing empty file paths list
@@ -49,11 +54,11 @@ class Get(commands.Cog, name="Download"):
             #     print(file_name)
         
             # writing files to a zipfile
-            with ZipFile('./problems/problems-' + temp  +'.zip','w') as zip:
+            with ZipFile('./zipped/problems-' + temp  +'.zip','w') as zip:
                 print('Following files will be zipped:')
                 # writing each file one by one
                 for file in file_paths:
-                    if lab != 'ALL':
+                    if lab != 'all':
                         if file.find(lab) != -1 and file.find('week-' + week): 
                             print(file)
                             zip.write(file)
@@ -64,57 +69,67 @@ class Get(commands.Cog, name="Download"):
                     else:
                         print(file)
                         zip.write(file)
-
+                        counter = True;
+                        
+                if counter:
+                    print("file doesn't exists")
+                    return
 
             print('All files zipped successfully!') 
 
-        if lab == 'ALL':
-            temp = lab.upper
-            temp.upper()
-        elif lab and week:
-            temp = lab + '-week-' + str(week)    
-            temp.upper()
-        elif lab:
+        if lab == 'all':
             temp = lab
-            temp.upper()
+        elif lab and week:
+            temp = lab.upper() + '-week-' + str(week.upper())    
+        elif lab:
+            temp = lab.upper()
 
-        if lab == 'ALL':
-            print("all")
-            if os.path.exists('./problems/problems-' + temp  +'.zip'):
+        print(temp)
+
+        if lab == 'all':
+            print("all no temp")
+            if os.path.exists('./zipped/problems-' + temp  +'.zip'):
                 print("File exist!")
                 await ctx.send("Uploading...")
-                await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
+                await ctx.send(file=discord.File('./zipped/problems-' + temp  +'.zip'))
             else:
                 bulking()  
-                await ctx.send("Uploading...")
-                await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
+                if not counter:
+                    await ctx.send("Uploading...")
+                    await ctx.send(file=discord.File('./zipped/problems-' + temp  +'.zip'))
+                else:
+                    await ctx.send("File doesn't exist! Please, check it using `haya list`, nii-sama!")
         elif lab and week and problem:
             problem = problem.upper()
             lab = lab.upper()
+            await ctx.send("Uploading...")
             file_path = glob.glob("./problems/*/" + lab + '-week-' + week + '-prob-' + problem + '.pdf')
-            
             await ctx.send(file=discord.File(file_path[0]))
         elif lab and week:
-            print("lab and week")
-            if os.path.exists('./problems/problems-' + temp  +'.zip'):
+            print("lab and week zip")
+            if os.path.exists('./zipped/problems-' + temp  +'.zip'):
                 print("File exist!")
                 await ctx.send("Uploading...")
-                await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
+                await ctx.send(file=discord.File('./zipped/problems-' + temp  +'.zip'))
             else:
                 bulking()  
-                await ctx.send("Uploading...")
-                await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
+                if not counter:
+                    await ctx.send("Uploading...")
+                    await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
+                else:
+                    await ctx.send("File doesn't exist! Please, check it using `haya list`, nii-sama!")
         elif lab:
-            print("lab")
-            if os.path.exists('./problems/problems-' + temp  +'.zip'):
+            print("lab zip")
+            if os.path.exists('./zipped/problems-' + temp  +'.zip'):
                 print("File exist!")
                 await ctx.send("Uploading...")
-                await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
+                await ctx.send(file=discord.File('./zipped/problems-' + temp  +'.zip'))
             else:
-                bulking()  
-                await ctx.send("Uploading...")
-                await ctx.send(file=discord.File('./problems/problems-' + temp  +'.zip'))
-
+                if not counter:
+                    await ctx.send("Uploading...")
+                    await ctx.send(file=discord.File('./zipped/problems-' + temp  +'.zip'))
+                else:
+                    await ctx.send("File doesn't exist! Please, check it using `haya list`, nii-sama!")
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Get(bot))
