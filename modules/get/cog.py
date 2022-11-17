@@ -72,7 +72,7 @@ class Get(commands.Cog, name="Download"):
             temp = lab.upper
             temp.upper()
         elif lab and week:
-            temp = lab + '-' +str(week)    
+            temp = lab + '-week-' + str(week)    
             temp.upper()
         elif lab:
             temp = lab
