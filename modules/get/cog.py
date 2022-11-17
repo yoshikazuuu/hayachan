@@ -53,7 +53,7 @@ class Get(commands.Cog, name="Download"):
                 print('Following files will be zipped:')
                 # writing each file one by one
                 for file in file_paths:
-                    if lab != 'all':
+                    if lab != 'ALL':
                         if file.find(lab) != -1 and file.find('week-' + week): 
                             print(file)
                             zip.write(file)
