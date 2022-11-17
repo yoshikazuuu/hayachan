@@ -23,8 +23,7 @@ class Get(commands.Cog, name="Download"):
         `haya get all`
         """
 
-        # Counting if file exist or not
-        counter = False;
+       
 
         def get_all_file_paths(directory):
         
@@ -57,14 +56,15 @@ class Get(commands.Cog, name="Download"):
             with ZipFile('./zipped/problems-' + temp  +'.zip','w') as zip:
                 print('Following files will be zipped:')
                 # writing each file one by one
+                # Counting if file exist or not
+                global counter
+                counter = False;
                 for file in file_paths:
                     if lab != 'all':
-                        if file.find(lab) != -1 and file.find('week-' + week): 
+                        if file.find(lab): 
                             print(file)
                             zip.write(file)
-                        elif file.find(lab) != -1:
-                            print(file)
-                            zip.write(file)
+                            counter = True
                         else: continue
                     else:
                         print(file)
