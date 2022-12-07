@@ -5,7 +5,9 @@ import glob
 import os
 
 class Get(commands.Cog, name="Download"):
-    """For Downloading listed files"""
+    """
+    `get`
+    """
 
 
     def __init__(self, bot: commands.Bot):
@@ -72,6 +74,7 @@ class Get(commands.Cog, name="Download"):
                         counter = True;
                         
                 if not counter:
+                    os.remove('./zipped/problems-' + temp +'.zip')
                     print("file doesn't exists")
                     return
 
@@ -79,6 +82,8 @@ class Get(commands.Cog, name="Download"):
 
         if lab == 'all':
             temp = lab
+        elif lab and week and problem:
+            temp = lab.upper() + '-week-' + str(week) + '-prob-' + problem.upper()
         elif lab and week:
             temp = lab.upper() + '-week-' + str(week)    
         elif lab:
@@ -98,13 +103,17 @@ class Get(commands.Cog, name="Download"):
                     await ctx.send("Uploading...")
                     await ctx.send(file=discord.File('./zipped/problems-' + temp  +'.zip'))
                 else:
-                    await ctx.send("File doesn't exist! Please, check it using `haya list`, nii-sama!")
+                    await ctx.send("File doesn't exist! Please, check it using `haya list`, *nii-sama!*")
         elif lab and week and problem:
             problem = problem.upper()
             lab = lab.upper()
-            await ctx.send("Uploading...")
             file_path = glob.glob("./problems/*/" + lab + '-week-' + week + '-prob-' + problem + '.pdf')
-            await ctx.send(file=discord.File(file_path[0]))
+            print(len(file_path))
+            if len(file_path):
+                await ctx.send("Uploading...")
+                await ctx.send(file=discord.File(file_path[0]))
+            else:
+                await ctx.send("File doesn't exist! Please, check it using `haya list`, *nii-sama!*")
         elif lab and week:
             print("lab and week zip")
             if os.path.exists('./zipped/problems-' + temp  +'.zip'):
@@ -117,20 +126,20 @@ class Get(commands.Cog, name="Download"):
                     await ctx.send("Uploading...")
                     await ctx.send(file=discord.File('./zipped/problems-' + temp  +'.zip'))
                 else:
-                    await ctx.send("File doesn't exist! Please, check it using `haya list`, nii-sama!")
+                    await ctx.send("File doesn't exist! Please, check it using `haya list`, *nii-sama!*")
         elif lab:
-            bulking()
             print("lab zip")
             if os.path.exists('./zipped/problems-' + temp  +'.zip'):
                 print("File exist!")
                 await ctx.send("Uploading...")
                 await ctx.send(file=discord.File('./zipped/problems-' + temp  +'.zip'))
             else:
+                bulking()
                 if counter:
                     await ctx.send("Uploading...")
                     await ctx.send(file=discord.File('./zipped/problems-' + temp  +'.zip'))
                 else:
-                    await ctx.send("File doesn't exist! Please, check it using `haya list`, nii-sama!")
+                    await ctx.send("File doesn't exist! Please, check it using `haya list`, *nii-sama!*")
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Get(bot))

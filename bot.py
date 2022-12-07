@@ -16,7 +16,6 @@ class HelpEmbed(discord.Embed):  # Our embed with some preset attributes to avoi
         self.set_footer(text=text)
         self.color = discord.Color.from_str('#fdf0b3')
 
-
 class MyHelp(commands.HelpCommand):
     def __init__(self):
         super().__init__(  # create our class with some aliases and cooldown
@@ -103,7 +102,7 @@ class MyHelp(commands.HelpCommand):
 
 
 intents = discord.Intents.all()
-bot = commands.Bot("haya ", intents=intents, help_command=MyHelp())
+bot = commands.Bot(command_prefix="haya ", intents=intents, help_command=MyHelp())
 
 @bot.event
 async def on_ready():

@@ -4,7 +4,9 @@ import discord
 import glob
 
 class List(commands.Cog, name="Show"):
-    """Commands for showing purposes"""
+    """
+    `list`
+    """
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
@@ -16,7 +18,7 @@ class List(commands.Cog, name="Show"):
         
         Example: 
         `haya list` for showing folders only
-        `haya list files` for showing folders with files
+        `haya list all` for showing folders with files
         """
         dir1 = os.listdir("./problems")
         dir1.sort()
@@ -25,7 +27,7 @@ class List(commands.Cog, name="Show"):
         counter = 0
 
         arr = list()
-        if flag == 'files':
+        if flag == 'all':
             for folder in dir1:
                 arr.append("📁 " + folder + '\n')
                 for i in range(0 + 6*counter,6 + 6*counter):
