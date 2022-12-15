@@ -19,14 +19,16 @@ class Music(commands.Cog, name="Music"):
         `haya play <url>`        
         """
         # Debug
-        channel = ctx.author.voice.channel
-        if not channel:
-            await ctx.send("You need to be connected in a voice channel to use this command!")
-            return
-        await channel.connect()
-
-
-
+        print("play command used")
+        try:
+            userState = ctx.author.voice
+            if not userState:
+                await ctx.send("You need to be connected in a voice channel to use this command!")
+                return
+            print("user has entered the voice chat ")
+            await userState.channel.connect()
+        except:
+            print("something's broken")
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Music(bot))
