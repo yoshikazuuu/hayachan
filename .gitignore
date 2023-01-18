@@ -130,6 +130,7 @@ dmypy.json
 # Canvas
 canvas.py
 zipped/
+problems/
 
 # Shit Apple
 .DS_Store/
