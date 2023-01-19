@@ -131,6 +131,7 @@ dmypy.json
 canvas.py
 zipped/
 problems/
+.\\Drivers/
 
 # Shit Apple
-.DS_Store/
+.DS_Store
